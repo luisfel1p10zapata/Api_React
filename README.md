@@ -179,7 +179,7 @@ my-react-app/
 
 ```markdown
 ![Landing](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/Landing.png)
-![Dashboard](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/dashboard.png)
+![Dashboard](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/Dashboard.png)
 ![Api](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/Api.png)
 ![Inicio](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/Inicio.png)
 ```
