@@ -1,18 +1,29 @@
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
+
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+
+dotenv.config(); // 🔥 cargar .env
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// 🔌 Conectar MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/mi_db")
-  .then(() => console.log("Mongo conectado"))
-  .catch(err => console.log(err));
+// 🧪 DEBUG (puedes quitar luego)
+console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("PORT:", process.env.PORT);
+
+// 🔌 Conectar MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ Mongo conectado"))
+  .catch(err => console.log("❌ Error Mongo:", err.message));
 
 // 👤 Modelo usuario
 const User = mongoose.model("User", {
@@ -51,7 +62,10 @@ app.post("/api/auth/login", async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(400).json({ msg: "Contraseña mal" });
 
-    const token = jwt.sign({ id: user._id }, "secreto123");
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET
+    );
 
     res.json({ token, user });
   } catch (error) {
@@ -60,6 +74,6 @@ app.post("/api/auth/login", async (req, res) => {
 });
 
 // 🚀 SERVER
-app.listen(4000, () => {
-  console.log("Servidor en puerto 4000");
+app.listen(process.env.PORT || 4000, () => {
+  console.log(`🚀 Servidor en puerto ${process.env.PORT || 4000}`);
 });
