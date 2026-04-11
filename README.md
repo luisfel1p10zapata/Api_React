@@ -178,10 +178,10 @@ my-react-app/
 ## 🖼️ Screenshot de la Interfaz
 
 ```markdown
-![Landing](app/assets/Landing.png)
-![Dashboard](app/assets/dashboard.png)
-![Api](https://github.com/luisfel1p10zapata/Api_React/blob/main/app/assets/Api.png?raw=true)
-![Inicio](app/assets/Inicio.png)
+![Landing](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/Landing.png)
+![Dashboard](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/dashboard.png)
+![Api](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/Api.png)
+![Inicio](https://raw.githubusercontent.com/luisfel1p10zapata/Api_React/main/app/assets/Inicio.png)
 ```
 
 ---
