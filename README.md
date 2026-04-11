@@ -180,7 +180,7 @@ my-react-app/
 ```markdown
 ![Landing](app/assets/Landing.png)
 ![Dashboard](app/assets/dashboard.png)
-![Api](app/assets/Api.png)
+![Api](https://github.com/luisfel1p10zapata/Api_React/blob/main/app/assets/Api.png?raw=true)
 ![Inicio](app/assets/Inicio.png)
 ```
 
