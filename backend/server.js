@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 });
 
 // 🔐 REGISTER
-app.post("/api/auth/register", async (req, res) => {
+app.post("api/auth/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
