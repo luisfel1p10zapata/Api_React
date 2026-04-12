@@ -8,17 +8,16 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-
-dotenv.config(); // 🔥 cargar .env
+dotenv.config();
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+// 🔐 CORS (abierto por ahora, luego lo puedes restringir)
+app.use(cors({
+  origin: "*"
+}));
 
-// 🧪 DEBUG (puedes quitar luego)
-console.log("MONGO_URI:", process.env.MONGO_URI);
-console.log("PORT:", process.env.PORT);
+app.use(express.json());
 
 // 🔌 Conectar MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
@@ -30,6 +29,11 @@ const User = mongoose.model("User", {
   name: String,
   email: { type: String, unique: true },
   password: String
+});
+
+// 🌐 Ruta base (para evitar "Cannot GET /")
+app.get("/", (req, res) => {
+  res.send("API funcionando 🚀");
 });
 
 // 🔐 REGISTER
@@ -47,7 +51,7 @@ app.post("/api/auth/register", async (req, res) => {
 
     res.json({ msg: "Registrado" });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ msg: "Error en el servidor" });
   }
 });
 
@@ -60,20 +64,27 @@ app.post("/api/auth/login", async (req, res) => {
     if (!user) return res.status(400).json({ msg: "No existe" });
 
     const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(400).json({ msg: "Contraseña mal" });
+    if (!valid) return res.status(400).json({ msg: "Contraseña incorrecta" });
 
+    // 🔐 Token con expiración
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
     );
 
-    res.json({ token, user });
+    // 🔒 Quitar password del response
+    const { password: _, ...userSafe } = user.toObject();
+
+    res.json({ token, user: userSafe });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ msg: "Error en el servidor" });
   }
 });
 
 // 🚀 SERVER
-app.listen(process.env.PORT || 4000, () => {
-  console.log(`🚀 Servidor en puerto ${process.env.PORT || 4000}`);
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor en puerto ${PORT}`);
 });
