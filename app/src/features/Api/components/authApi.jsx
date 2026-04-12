@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const API_URL = "https://api-react-79xs.onrender.com/api";
-
-console.log("API_URL:", API_URL); // Verificar que la URL es correcta
+const API_URL = import.meta.env.VITE_API_URL;
+console.log(import.meta.env.VITE_API_URL);
 
 export const registerUser = (data) =>
   axios.post(`${API_URL}/auth/register`, data);
