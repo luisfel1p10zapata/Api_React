@@ -26,8 +26,8 @@ export const Inicio = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const err = validate();
 
+    const err = validate();
     if (Object.keys(err).length > 0) {
       setErrors(err);
       return;
@@ -49,11 +49,14 @@ export const Inicio = () => {
       window.location.href = "/";
 
     } catch (error) {
-      console.log(error);
+      console.log(error?.response?.data || error.message);
+
+      const msg =
+        error?.response?.data?.msg || "Credenciales incorrectas";
 
       setErrors({
-        email: "Credenciales incorrectas",
-        password: "Credenciales incorrectas"
+        email: msg,
+        password: msg
       });
 
     } finally {
@@ -114,11 +117,7 @@ export const Inicio = () => {
                 className="btn btn-outline-secondary"
                 onClick={() => setShowPass(!showPass)}
               >
-                <i
-                  className={`bi ${
-                    showPass ? "bi-eye-slash" : "bi-eye"
-                  }`}
-                ></i>
+                <i className={`bi ${showPass ? "bi-eye-slash" : "bi-eye"}`}></i>
               </button>
               <div className="invalid-feedback">{errors.password}</div>
             </div>

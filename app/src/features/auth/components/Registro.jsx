@@ -49,7 +49,6 @@ export const Registro = () => {
     setLoading(true);
 
     try {
-      // 🔥 OJO: el backend espera "name", no "nombre"
       await registerUser({
         name: form.nombre,
         email: form.email,
@@ -58,14 +57,14 @@ export const Registro = () => {
 
       alert("Usuario registrado");
 
-      // redirigir al login
-      window.location.href = "/login";
+      // ✅ CORREGIDO (antes era /login)
+      window.location.href = "/inicio";
 
     } catch (error) {
-  console.log(error.response?.data);
+      console.log(error.response?.data);
 
       setErrors({
-        email: "Error al registrar (puede que ya exista)"
+        email: error.response?.data?.msg || "Error al registrar"
       });
 
     } finally {
@@ -90,7 +89,6 @@ export const Registro = () => {
         </div>
 
         <form onSubmit={handleSubmit} noValidate>
-          {/* Nombre */}
           <div className="mb-3">
             <input
               type="text"
@@ -102,7 +100,6 @@ export const Registro = () => {
             <div className="invalid-feedback">{errors.nombre}</div>
           </div>
 
-          {/* Email */}
           <div className="mb-3">
             <input
               type="email"
@@ -114,7 +111,6 @@ export const Registro = () => {
             <div className="invalid-feedback">{errors.email}</div>
           </div>
 
-          {/* Password */}
           <div className="mb-2">
             <div className="input-group">
               <input
@@ -129,13 +125,10 @@ export const Registro = () => {
                 className="btn btn-outline-secondary"
                 onClick={() => setShowPass(!showPass)}
               >
-                <i
-                  className={`bi ${
-                    showPass ? "bi-eye-slash" : "bi-eye"
-                  }`}
-                ></i>
+                <i className={`bi ${showPass ? "bi-eye-slash" : "bi-eye"}`}></i>
               </button>
             </div>
+
             <small
               className={`text-${
                 strength === "Fuerte"
@@ -147,19 +140,17 @@ export const Registro = () => {
             >
               Seguridad: {strength}
             </small>
+
             <div className="invalid-feedback d-block">
               {errors.password}
             </div>
           </div>
 
-          {/* Confirmar */}
           <div className="mb-3">
             <input
               type="password"
               name="confirmPassword"
-              className={`form-control ${
-                errors.confirmPassword && "is-invalid"
-              }`}
+              className={`form-control ${errors.confirmPassword && "is-invalid"}`}
               placeholder="Confirmar contraseña"
               onChange={handleChange}
             />

@@ -1,9 +1,22 @@
 import axios from "axios";
 
-const API_URL = "https://api-react-79xs.onrender.com";
+const API_URL = "https://api-react-79xs.onrender.com/api";
 
-export const registerUser = (data) =>
-  axios.post(`${API_URL}/auth/register`, data);
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-export const loginUser = (data) =>
-  axios.post(`${API_URL}/auth/login`, data);
+// 🔐 REGISTER
+export const registerUser = (data) => {
+  return api.post("/auth/register", data);
+};
+
+// 🔐 LOGIN
+export const loginUser = (data) => {
+  return api.post("/auth/login", data);
+};
+
+export default api;
