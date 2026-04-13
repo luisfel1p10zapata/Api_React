@@ -12,32 +12,32 @@ dotenv.config();
 
 const app = express();
 
-// 🔐 CORS (abierto por ahora, luego lo puedes restringir)
+// 🔐 CORS
 app.use(cors({
   origin: "*"
 }));
 
 app.use(express.json());
 
-// 🔌 Conectar MongoDB Atlas
+// 🔌 MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Mongo conectado"))
   .catch(err => console.log("❌ Error Mongo:", err.message));
 
-// 👤 Modelo usuario
+// 👤 Modelo
 const User = mongoose.model("User", {
   name: String,
   email: { type: String, unique: true },
   password: String
 });
 
-// 🌐 Ruta base (para evitar "Cannot GET /")
+// 🌐 Ruta base
 app.get("/", (req, res) => {
   res.send("API funcionando 🚀");
 });
 
-// 🔐 REGISTER
-app.post("api/auth/register", async (req, res) => {
+// 🔐 REGISTER ✅ CORREGIDO
+app.post("/api/auth/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -66,14 +66,12 @@ app.post("/api/auth/login", async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(400).json({ msg: "Contraseña incorrecta" });
 
-    // 🔐 Token con expiración
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // 🔒 Quitar password del response
     const { password: _, ...userSafe } = user.toObject();
 
     res.json({ token, user: userSafe });
