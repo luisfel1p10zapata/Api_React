@@ -178,10 +178,25 @@ my-react-app/
 ## 🖼️ Screenshot de la Interfaz
 
 ```markdown
-![Test](./assets/Landing.png)
-![Dashboard](./assets/Dashboard.png)
-![Api](./assets/Api.png)
-![Inicio](./assets/Inicio.png)
+## 📸 Capturas del proyecto
+
+### 🏠 Landing Page
+![Landing](./app/assets/Landing.png)
+
+---
+
+### 🔐 Login / Inicio
+![Inicio](./app/assets/Inicio.png)
+
+---
+
+### 📊 Dashboard
+![Dashboard](./app/assets/Dashboard.png)
+
+---
+
+### 🔌 API Panel
+![API](./app/assets/Api.png)
 ```
 
 ---
