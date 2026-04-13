@@ -178,10 +178,10 @@ my-react-app/
 ## 🖼️ Screenshot de la Interfaz
 
 ```markdown
-![Test](.//assets/Landing.png)
-![Dashboard](.//assets/Dashboard.png)
-![Api](.//assets/Api.png)
-![Inicio](.//assets/Inicio.png)
+![Test](./assets/Landing.png)
+![Dashboard](./assets/Dashboard.png)
+![Api](./assets/Api.png)
+![Inicio](./assets/Inicio.png)
 ```
 
 ---
